@@ -1,10 +1,9 @@
-import {Response } from 'express';
-import { AuthRequest} from '../../middlewares/auth.middleware';
+import {Request, Response } from 'express'; 
 import {Inscripcion} from '../../models/inscripcion';
 import { Clase } from '../../models/clase';
 
 //Inscribir al usuario autenticado a una clase
-export const inscribirseAClase = async (req: AuthRequest, res: Response) => {
+export const inscribirseAClase = async (req: any, res: Response) => {
     try {
         const userId =req.user.id; // Obtenemos el ID del usuario gracias al Token JWT
         const { claseId } = req.body;
@@ -41,12 +40,12 @@ export const inscribirseAClase = async (req: AuthRequest, res: Response) => {
     }
 };
 
-export const getMisInscripciones = async (req: AuthRequest, res: Response) => {
+export const getMisInscripciones = async (req: any, res: Response) => {
     try {
         const userId =req.user.id;
 
         const inscripciones = await Inscripcion.findAll({
-            were: { userId },
+            where: { userId },
         });
 
         return res.status(200).json(inscripciones);
@@ -56,7 +55,7 @@ export const getMisInscripciones = async (req: AuthRequest, res: Response) => {
     }
 };
 
-export const cancelarInscripcion = async (req: AuthRequest, res: Response)=> {
+export const cancelarInscripcion = async (req: any, res: Response)=> {
     try{
         const userId = req.user.id;
         const { id } = req.params;

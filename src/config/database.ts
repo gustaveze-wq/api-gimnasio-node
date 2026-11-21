@@ -10,5 +10,14 @@ export const sequelize = new Sequelize(
     port: Number(process.env.DB_PORT) || 5432,
     dialect: 'postgres',
     logging: false,
+    dialectOptions:
+      process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production'
+      ? {
+          ssl: {
+          require: true,
+          rejectUnauthorized: false
+        },
+      }
+    :{},
   }
 );
